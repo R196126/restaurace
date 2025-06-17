@@ -25,15 +25,15 @@ exports.addReview = async (req, res) => {
     const lastReview = await Review.findOne({ author: userId }).sort({ createdAt: -1 });
 
     // Pokud už nějakou recenzi má a není starší než 1 hodinu
-    // if (lastReview) {
-    //   const oneHourAgo = Date.now() - 60 * 60 * 1000;
+     if (lastReview) {
+       const oneHourAgo = Date.now() - 60 * 60 * 1000;
 
-    //   if (lastReview.createdAt > oneHourAgo) {
-    //     return res.status(429).json({
-    //       message: "Recenzi můžete přidat pouze jednou za hodinu."
-    //     });
-    //   }
-    // }
+       if (lastReview.createdAt > oneHourAgo) {
+         return res.status(429).json({
+           message: "Recenzi můžete přidat pouze jednou za hodinu."
+         });
+       }
+     }
 
     // Vytvoření nové recenze
     const review = new Review({
