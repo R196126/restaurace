@@ -4,7 +4,7 @@ exports.getReviews = async (req, res) => {
   try {
     const reviews = await Review.find().populate("author","username");
     res.json(reviews);
-    console.log(reviews);
+    
   } catch (error) {
     res.status(500).json({ message: "Chyba získání recenze" });
   }
@@ -15,7 +15,7 @@ exports.addReview = async (req, res) => {
     const { comment, rating } = req.body;
     const userId = req.user?.userId;
 
-    console.log("Uživatel v addReview:", req.user);
+    
 
     if (!userId) return res.status(401).json({ message: "Nepřihlášený uživatel." });
     if (rating < 1 || rating > 5) return res.status(400).json({ message: "Obsah a hodnocení jsou povinné." });
